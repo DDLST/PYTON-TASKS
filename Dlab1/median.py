@@ -34,7 +34,7 @@ def main():
         "std": "std"
     }).reset_index()
     
-    print("=== Медиана и среднее отклонение по категориям ===")
+    print("Медиана и среднее отклонение по категориям")
     for _, row in simple_stats.iterrows():
         category = row['Категория']
         median_val = row['median']
@@ -43,7 +43,7 @@ def main():
     
     final_stats = K.groupby("Категория")["median"].agg(["median", "std"]).reset_index()
     
-    print("\n=== Медиана медиан и отклонение медиан ===")
+    print("\nМедиана медиан и отклонение медиан")
     for _, row in final_stats.iterrows():
         category = row['Категория']
         median_of_medians = row['median']
