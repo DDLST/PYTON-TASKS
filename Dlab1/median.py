@@ -29,20 +29,7 @@ def main():
     
     K = pd.concat(all_results, ignore_index=True)
 
-    simple = K.groupby("Категория").agg({
-        "median": "median",
-        "std": "std"
-    }).reset_index()
-    
-    print("Медиана и среднее отклонение по категориям")
-    for _, row in simple.iterrows():
-        category = row['Категория']
-        median_val = row['median']
-        std_val = row['std']
-        print(f"Категория {category}: медиана = {median_val:.2f}, среднее отклонение = {std_val:.2f}")
-    
     final_stats = K.groupby("Категория")["median"].agg(["median", "std"]).reset_index()
-    
     print("\nМедиана медиан и отклонение медиан")
     for _, row in final_stats.iterrows():
         category = row['Категория']
