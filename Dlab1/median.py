@@ -13,7 +13,7 @@ def create_files():
             data.append([category, value])
         
         df = pd.DataFrame(data, columns=["Категория", "Значение"])
-        df.to_csv(f"file_{N+1}.csv", index=False)
+        df.to_csv(f"file{N+1}.csv", index=False)
 
 def process_file(filename):
     df = pd.read_csv(filename)
@@ -22,20 +22,20 @@ def process_file(filename):
 
 def main():
     create_files()
-    files = [f"file_{i+1}.csv" for i in range(5)]
+    files = [f"file{i+1}.csv" for i in range(5)]
     
     with Pool() as executor:
         all_results = list(executor.map(process_file, files))
     
     K = pd.concat(all_results, ignore_index=True)
 
-    simple_stats = K.groupby("Категория").agg({
+    simple = K.groupby("Категория").agg({
         "median": "median",
         "std": "std"
     }).reset_index()
     
     print("Медиана и среднее отклонение по категориям")
-    for _, row in simple_stats.iterrows():
+    for _, row in simple.iterrows():
         category = row['Категория']
         median_val = row['median']
         std_val = row['std']
